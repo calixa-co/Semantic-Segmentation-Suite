@@ -11,6 +11,7 @@ output/*
 dataset/*
 !dataset/.gitkeep
 !dataset/readme.md
+!dataset/CamVid/
 Test/*.png
 CamVid_train.tfrecords
 tfrecords.py
