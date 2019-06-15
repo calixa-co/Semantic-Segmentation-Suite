@@ -8,8 +8,9 @@ trainer/models/*txt
 trainer/models/*.tflite
 output/*
 !output/.gitkeep
-!dataset/.gitkeep
 dataset/*
+!dataset/.gitkeep
+!dataset/readme.md
 Test/*.png
 CamVid_train.tfrecords
 tfrecords.py
