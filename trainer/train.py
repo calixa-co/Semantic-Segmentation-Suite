@@ -68,7 +68,7 @@ if init_fn is not None:
     init_fn(sess)
 
 # Load a previous checkpoint if desired
-model_checkpoint_name = "../output/checkpoints/latest_model_" + args.model + "_" + args.dataset + ".ckpt"
+model_checkpoint_name = args.output_path + "checkpoints/latest_model_" + args.model + "_" + args.dataset + ".ckpt"
 if args.continue_training:
     print('Loaded latest model checkpoint')
     saver.restore(sess, model_checkpoint_name)
@@ -143,7 +143,7 @@ for epoch in range(args.epoch_start_i, args.nb_epoch):
         cnt = cnt + args.batch_size
 
         if cnt % 20 == 0:
-            string_print = "Epoch = %d Count = %d Current_Loss = %.4f Time = %.2f"%(epoch,cnt,current,time.time()-st)
+            string_print = "Epoch = %d Count = %d Current_Loss = %.8f Time = %.2f"%(epoch,cnt,current,time.time()-st)
             general_tool.LOG(string_print)
             st = time.time()
 
@@ -151,8 +151,8 @@ for epoch in range(args.epoch_start_i, args.nb_epoch):
     avg_loss_per_epoch.append(mean_loss)
 
     # Create directories if needed
-    if not os.path.isdir("%s/%04d"%("checkpoints",epoch)):
-        os.makedirs("%s/%04d"%("checkpoints",epoch))
+    if not os.path.isdir("%s/%04d"%(args.output_path + "checkpoints",epoch)):
+        os.makedirs("%s/%04d"%(args.output_path + "checkpoints",epoch))
 
     # Save latest checkpoint to same file name
     print("Saving latest checkpoint")
@@ -160,12 +160,12 @@ for epoch in range(args.epoch_start_i, args.nb_epoch):
 
     if val_indices != 0 and epoch % args.checkpoint_step == 0:
         print("Saving checkpoint for this epoch")
-        saver.save(sess,"%s/%04d/model.ckpt"%("checkpoints",epoch))
+        saver.save(sess,"%s/%04d/model.ckpt"%(args.output_path + "checkpoints",epoch))
 
     if epoch % args.validation_step == 0:
 
         print("Performing validation")
-        target=open("%s/%04d/val_scores.csv"%("checkpoints",epoch),'w')
+        target=open("%s/%04d/val_scores.csv"%(args.output_path + "checkpoints",epoch),'w')
         target.write("val_name, avg_accuracy, precision, recall, f1 score, mean iou, %s\n" % (class_names_str))
 
         scores_list = []

@@ -47,7 +47,7 @@ def parse():
 
     parser.add_argument('--redux', type=float, default=1.0, help='Dataset reduction factor [0,1], default to 1.')
 
-    parser.add_argument('--output_dir', type=str, default="../output", help='Output directory ')
+    parser.add_argument('--output_path', type=str, default="output/", help='Output directory ')
 
     args = parser.parse_args()
 
